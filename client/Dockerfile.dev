@@ -1,0 +1,8 @@
+FROM node:alpine as builder
+WORKDIR /app
+COPY ./package.json .
+RUN npm install
+COPY . .
+CMD ["npm", "run", "serve"]
+# docker image build --tag client-wrapper -f Dockerfile.dev .
+# docker container run --rm --name client-wrapper client-wrapper

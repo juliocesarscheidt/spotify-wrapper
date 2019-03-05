@@ -1,0 +1,19 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker image build --tag juliocesarmidia/client-wrapper-test -f ./__tests__/Dockerfile.dev ./__tests__
+
+script:
+  - docker container run juliocesarmidia/client-wrapper-test
+
+after_success:
+  - docker image build --tag juliocesarmidia/client-wrapper ./client
+  # login into Docker Hub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker image push juliocesarmidia/client-wrapper
+
+# juliocesarmidia/client-wrapper
+# docker image push juliocesarmidia/client-wrapper:1.0
