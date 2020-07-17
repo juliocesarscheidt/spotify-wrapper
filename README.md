@@ -4,7 +4,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/43fefd79-8ccf-4273-9d40-485c4948d94a/deploy-status)](https://app.netlify.com/sites/wrapper-spotify-js/deploys)
 [![GitHub Status](https://badgen.net/github/status/julio-cesar-development/spotify-wrapper)](https://github.com/julio-cesar-development/spotify-wrapper)
 
-See project [Spotify Wrapper](https://wrapper-spotify-js.netlify.com)
+See project [Spotify Wrapper](https://wrapper-spotify-js.netlify.app)
 
 ## Running with docker
 
