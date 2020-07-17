@@ -1,4 +1,4 @@
-FROM node:14-alpine as builder
+FROM node:alpine as builder
 LABEL maintainer="Julio Cesar <julio@blackdevs.com.br>"
 
 WORKDIR /app
@@ -9,11 +9,6 @@ COPY . .
 ARG VUE_APP_CLIENT_ID
 ENV VUE_APP_CLIENT_ID=$VUE_APP_CLIENT_ID
 
-RUN npm run build
+EXPOSE 8080
 
-FROM nginx:1.19-alpine
-
-COPY --from=builder /app/dist/ /usr/share/nginx/html
-EXPOSE 80
-
-RUN sleep 5
+CMD ["npm", "run", "serve"]

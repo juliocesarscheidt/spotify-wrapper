@@ -6,7 +6,7 @@ import store from '@/store/store';
 import Multiselect from 'vue-multiselect';
 import Logout from '@/utils/Logout';
 import SetUser from '@/utils/SetUser';
-import Notifications from 'vue-notification'
+import Notifications from 'vue-notification';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = process.env.DEV_TOOLS || true;
@@ -29,11 +29,9 @@ if (localStorage.jwtToken && localStorage.user) {
 Vue.component('multiselect', Multiselect);
 Vue.use(Notifications);
 
-const vm = new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App),
 });
-
-export default vm;

@@ -1,31 +1,16 @@
-version: '3'
+version: '3.4'
+
 services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile
-    ports:
-      - 8080:80
-    volumes:
-      - /app/node_modules
-      - ./client:/app
-    environment: 
-      - DEV_TOOLS=false
-  dev:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: development.Dockerfile
+      args:
+        VUE_APP_CLIENT_ID: ${VUE_APP_CLIENT_ID}
     ports:
       - 8080:8080
     volumes:
       - /app/node_modules
       - ./client:/app
-    environment: 
+    environment:
       - DEV_TOOLS=true
-  tests:
-    build:
-      context: ./__tests__
-      dockerfile: Dockerfile.dev
-    volumes:
-      - /app/node_modules
-      - ./__tests__:/app

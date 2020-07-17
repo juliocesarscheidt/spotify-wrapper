@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div v class="container-small">
       <h2 class="page-header text-center">Welcome</h2>
 
@@ -14,7 +13,16 @@
         </div>
 
         <div class="form-group">
-          <multiselect v-model="type" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" deselect-label="Can't remove this value" :options="optionType" placeholder="type" ></multiselect>
+          <multiselect
+            v-model="type"
+            deselect-label="Can't remove this value"
+            placeholder="type"
+            v-bind:multiple="true"
+            v-bind:close-on-select="false"
+            v-bind:clear-on-select="false"
+            v-bind:preserve-search="true"
+            v-bind:options="optionType"
+          ></multiselect>
         </div>
 
         <div class="form-group">
@@ -103,9 +111,6 @@ import axios from 'axios';
 
 export default {
   name: 'Search',
-  components: {
-
-  },
   data() {
     return {
       search: '',
@@ -125,12 +130,6 @@ export default {
   },
   computed: {
     ...mapState(['user', 'userLoggedIn', 'token']),
-  },
-  watch: {
-
-  },
-  created() {
-
   },
   mounted() {
     if (localStorage.getItem('search')) {
@@ -174,7 +173,7 @@ export default {
         axios.get(`https://api.spotify.com/v1/search?q=${this.search}&type=${type}`, { headers })
           .then(res => {
 
-            this.albums = res.data.albums ? res.data.albums.items.map(item => {
+            this.albums = res.data.albums ? res.data.albums.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -187,7 +186,7 @@ export default {
               return item;
             }) : [];
 
-            this.artists = res.data.artists ? res.data.artists.items.map(item => {
+            this.artists = res.data.artists ? res.data.artists.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -198,7 +197,7 @@ export default {
               return item;
             }) : [];
 
-            this.playlists = res.data.playlists ? res.data.playlists.items.map(item => {
+            this.playlists = res.data.playlists ? res.data.playlists.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -208,7 +207,7 @@ export default {
               return item;
             }) : [];
 
-            this.tracks = res.data.tracks ? res.data.tracks.items.map(item => {
+            this.tracks = res.data.tracks ? res.data.tracks.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -237,38 +236,38 @@ export default {
 </script>
 
 <style scoped>
-  .full-width {
-    width: 100% !important;
-  }
-  ul{
-    list-style-type: none;
-    margin: 0px !important;
-    padding: 0px !important;
-  }
-  li {
-    padding: 5px;
-    height: 60px;
-    margin: 5px;
-    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .1);
-  }
-  li span img {
-    height: 40px;
-    width: auto;
-    max-width: 40px;
-  }
+.full-width {
+  width: 100% !important;
+}
+ul{
+  list-style-type: none;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+li {
+  padding: 5px;
+  height: 60px;
+  margin: 5px;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .1);
+}
+li span img {
+  height: 40px;
+  width: auto;
+  max-width: 40px;
+}
+.container-items {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.container-items > div {
+  min-width: 50%;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+@media screen and (max-width: 640px){
   .container-items {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column !important;
   }
-  .container-items > div {
-    min-width: 50%;
-    margin: 0px !important;
-    padding: 0px !important;
-  }
-  @media screen and (max-width: 640px){
-    .container-items {
-      flex-direction: column !important;
-    }
-  }
+}
 </style>

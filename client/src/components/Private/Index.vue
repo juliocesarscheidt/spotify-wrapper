@@ -10,7 +10,11 @@
         </div>
         <br>
         <div class="col-lg-12">
-          <a v-bind:href="user.external_urls" target="new">
+          <a
+            v-if="user.external_urls && user.image"
+            v-bind:href="user.external_urls"
+            target="new"
+          >
             <img v-bind:src="user.image" alt="">
           </a>
         </div>
@@ -24,36 +28,16 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Index',
-  components: {
-
-  },
-  data() {
-    return {
-
-    }
-  },
   computed: {
     ...mapState(['user'])
   },
-  watch: {
-
-  },
-  created() {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-
-  }
 }
 </script>
 
 <style scoped>
-  img {
-    height: 200px;
-    width: auto;
-    max-width: 200px;
-  }
+img {
+  height: 200px;
+  width: auto;
+  max-width: 200px;
+}
 </style>

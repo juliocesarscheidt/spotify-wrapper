@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  tests:
+    build:
+      context: ./__tests__
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./__tests__:/app

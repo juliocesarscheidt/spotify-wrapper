@@ -10,43 +10,10 @@ See project [Spotify Wrapper](https://wrapper-spotify-js.netlify.com)
 
 ```bash
 # run the build version
-docker-compose up client
-
-# run the dev version
-docker-compose up dev
+docker-compose up -d client
 
 # run tests
-docker-compose up tests
-```
-
-## Running appart
-
-```bash
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```bash
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```bash
-npm run build
-```
-
-### Run your tests
-
-```bash
-npm run test
-```
-
-### Lints and fixes files
-
-```bash
-npm run lint
+docker-compose -f docker-compose-tests.yml up
 ```
 
 ## Authors

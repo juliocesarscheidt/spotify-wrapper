@@ -55,59 +55,42 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'Header',
-  components: {
-
-  },
-  data() {
-    return {
-
-    }
-  },
   computed: {
     ...mapState(['user', 'userLoggedIn'])
-  },
-  watch: {
-
-  },
-  created() {
-
-  },
-  mounted() {
-
   },
   methods: {
     Logout() {
       Logout();
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style scoped>
-  .navbar-toggle{
-    transition: background-color .5s !important;
-    background-color: rgba(0,0,0,0) !important;
-  }
-  .navbar-toggle:hover{
-    background-color: rgba(100,100,100,.50) !important;
-  }
+.navbar-toggle{
+  transition: background-color .5s !important;
+  background-color: rgba(0,0,0,0) !important;
+}
+.navbar-toggle:hover{
+  background-color: rgba(100,100,100,.50) !important;
+}
 
-  .navbar-default{
-    background-color: #000 !important;
-  }
-  .navbar-default .navbar-nav>li>a{
-    transition: .5s;
-    color: #fff;
-  }
-  .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
-    color: #f22;
-  }
-  img {
-    height: 40px;
-    width: auto;
-    max-width: 40px;
-    float: right;
-    border-radius: 50%;
-    margin-top: 5px;
+.navbar-default{
+  background-color: #000 !important;
+}
+.navbar-default .navbar-nav>li>a{
+  transition: .5s;
+  color: #fff;
+}
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
+  color: #f22;
+}
+img {
+  height: 40px;
+  width: auto;
+  max-width: 40px;
+  float: right;
+  border-radius: 50%;
+  margin-top: 5px;
   }
 </style>

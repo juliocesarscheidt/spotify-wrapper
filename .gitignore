@@ -2,9 +2,11 @@
 node_modules
 client/dist
 
-# local env files
-.env.local
-.env.*.local
+# env files
+.env*
+
+.nyc_output/
+coverage/
 
 *.txt
 *.editorconfig
