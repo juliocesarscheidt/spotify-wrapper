@@ -115,6 +115,7 @@ button{
 	font-weight: bold;
 	border-radius: 0.2em;
 	height: 100%;
+  cursor: pointer;
 }
 button[type=submit], button[type=button]{
 	color: #fff;

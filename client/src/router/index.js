@@ -1,10 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store/store';
-
 // Private
 import Login from '@/components/Public/Login';
-
 // Public
 import Index from '@/components/Private/Index';
 import Search from '@/components/Private/Search';
@@ -12,16 +10,13 @@ import Search from '@/components/Private/Search';
 Vue.use(Router);
 
 const router = new Router({
-
+  mode: 'history',
   scrollBehavior(to, from, savedPosition) {
 		if (savedPosition) {
 			return savedPosition;
 		}
 		return { x: 0, y: 0 };
   },
-
-  // mode: 'history',
-
   routes: [
     // requiresGuest
     {
@@ -32,7 +27,6 @@ const router = new Router({
         requiresGuest: true
       }
     },
-
     // must be logged - requiresAuth
     {
       path: '/',
@@ -50,18 +44,16 @@ const router = new Router({
         requiresAuth: true
       }
     },
-
     // default
     {
       path: '*',
       component: Login
     }
   ]
-
 });
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.state.user) {
       next({
         name: 'Login',
@@ -72,7 +64,7 @@ router.beforeEach((to, from, next) => {
     }else{
       next()
     }
-  }else if (to.matched.some(record => record.meta.requiresGuest)) {
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
     if (store.state.user) {
       next({
         name: 'Index',
@@ -83,7 +75,7 @@ router.beforeEach((to, from, next) => {
     }else{
       next()
     }
-  }else{
+  } else {
     next()
   }
 });

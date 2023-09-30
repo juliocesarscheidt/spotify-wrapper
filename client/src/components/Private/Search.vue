@@ -4,7 +4,7 @@
       <h2 class="page-header text-center">Welcome</h2>
 
       <div class="center">
-        <div id="title">Find your music <b>{{ user.name.toUpperCase() }}</b></div>
+        <div id="title">Find your music <b>{{ user.name }}</b></div>
         <br>
 
         <div class="form-group">

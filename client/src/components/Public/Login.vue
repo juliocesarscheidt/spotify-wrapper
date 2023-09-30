@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import SetUser from '@/utils/SetUser';
+import querystring from 'querystring';
+import { SetUser, SetAccessToken, SetRefreshToken, SetExpiration } from '@/utils/SetUser';
+import { fetchToken, getMe } from '@/utils/spotify';
 
 export default {
   name: 'Login',
@@ -25,31 +26,32 @@ export default {
     };
   },
   watch: {
-    '$route.path': {
+    '$route': {
       immediate: true,
-      handler (value) {
-        if (value.indexOf('access_token') > 0) {
-          const access_token = value.split('access_token=')[1].split('&token_type=')[0];
-          const headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': `Bearer ${access_token}`
-          }
-          axios.get('https://api.spotify.com/v1/me', { headers })
-            .then((res) => {
-              const data = res.data;
-              const user = {
-                'id': data.id,
-                'href': data.href,
-                'name': data.display_name,
-                'email': data.email,
-                'image': data.images[0].url,
-                'external_urls': data.external_urls.spotify,
-              }
-              SetUser(user, access_token);
-              this.$router.push({ 'name': 'Index' });
-            }).catch((err) => {
-              console.error(err); // eslint-disable-line
-            });
+      deep: true,
+      async handler (route) {
+        const { code, state } = route.query;
+        if (!code || !state) return;
+
+        try {
+          const redirectUrl = `${window.location.protocol}//${window.location.host}/login`;
+
+          const { access_token, expires_in, refresh_token } =
+            await fetchToken({ grantType: 'authorization_code', code, state, redirectUrl });
+
+          const expiration = new Date().getTime() + (expires_in * 1000);
+
+          SetAccessToken(access_token);
+          SetRefreshToken(refresh_token);
+          SetExpiration(expiration);
+
+          const user = await getMe(access_token);
+          SetUser(user);
+
+          this.$router.push({ 'name': 'Index' });
+
+        } catch (error) {
+          console.error(error); // eslint-disable-line
         }
       }
     }
@@ -58,12 +60,33 @@ export default {
     submitForm(e) {
       e.preventDefault();
     },
+    generateRandomString(length) {
+      let text = '';
+      const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return text;
+    },
     loginSpotify() {
       const clientId = process.env.VUE_APP_CLIENT_ID;
-      const urlSpotify = 'https://accounts.spotify.com/authorize';
+      // const clientSecret = process.env.VUE_APP_CLIENT_SECRET;
 
-      const url = window.encodeURIComponent(`${window.location.protocol}//${window.location.host}/#/login`);
-      window.location.href = `${urlSpotify}?client_id=${clientId}&response_type=token&redirect_uri=${url}&scope=user-read-private%20user-read-email`;
+      const spotifyUrl = 'https://accounts.spotify.com/authorize';
+      const redirectUrl = `${window.location.protocol}//${window.location.host}/login`;
+
+      const scope = 'user-read-private%20user-read-email';
+      const state = this.generateRandomString(16);
+
+      const query = querystring.stringify({
+        response_type: 'code',
+        client_id: clientId,
+        redirect_uri: redirectUrl,
+        scope,
+        state,
+      });
+
+      window.location.href = `${spotifyUrl}?${query}`;
     },
   },
 }

@@ -3,7 +3,9 @@ import store from '@/store/store';
 import router from '../router';
 
 const Logout = () => {
-  localStorage.removeItem('jwtToken');
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('expiration');
   localStorage.removeItem('user');
 
   store.dispatch('logoutUser');

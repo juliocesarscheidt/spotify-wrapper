@@ -1,6 +1,6 @@
 <template>
   <footer class="text-center footer">
-    <p>@BlackDevs | {{ new Date().getFullYear() }} &trade;</p>
+    <p>@Blackdevs | {{ new Date().getFullYear() }} &trade;</p>
   </footer>
 </template>
 
@@ -12,13 +12,12 @@ export default {
 
 <style scoped>
 .footer{
-  padding-top: 14px;
+  padding-top: 20px;
   padding-bottom: 8px;
   margin-top: 20px;
-  background-color: #000;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #eee;
   font-size: 12px;
   font-weight: bold;
-  color: #fff;
+  color: #000;
 }
 </style>
