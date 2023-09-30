@@ -15,8 +15,9 @@ const store = new Vuex.Store({
   },
   getters: {
     tokenIsExpired(state) {
-      const curTime = Date.now() / 1000;
-      return Boolean((state.expiration <= curTime) && state.refreshToken);
+      const curTime = Math.floor(new Date().getTime() / 1000);
+      const exp = Math.floor(state.expiration / 1000);
+      return Boolean((exp <= curTime) && state.refreshToken);
     },
   },
   mutations: {
