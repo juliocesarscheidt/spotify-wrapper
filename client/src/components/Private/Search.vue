@@ -129,7 +129,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['user', 'userLoggedIn', 'token']),
+    ...mapState(['user', 'userLoggedIn', 'accessToken']),
   },
   mounted() {
     if (localStorage.getItem('search')) {
@@ -148,7 +148,7 @@ export default {
       if (this.search) {
         const headers = {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.token}`
+          'Authorization': `Bearer ${this.accessToken}`
         }
 
         // building a array of types
@@ -172,8 +172,9 @@ export default {
 
         axios.get(`https://api.spotify.com/v1/search?q=${this.search}&type=${type}`, { headers })
           .then(res => {
+            const { data } = res;
 
-            this.albums = res.data.albums ? res.data.albums.items.map((item) => {
+            this.albums = data.albums ? data.albums.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -186,7 +187,7 @@ export default {
               return item;
             }) : [];
 
-            this.artists = res.data.artists ? res.data.artists.items.map((item) => {
+            this.artists = data.artists ? data.artists.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -197,7 +198,7 @@ export default {
               return item;
             }) : [];
 
-            this.playlists = res.data.playlists ? res.data.playlists.items.map((item) => {
+            this.playlists = data.playlists ? data.playlists.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -207,7 +208,7 @@ export default {
               return item;
             }) : [];
 
-            this.tracks = res.data.tracks ? res.data.tracks.items.map((item) => {
+            this.tracks = data.tracks ? data.tracks.items.map((item) => {
               item = {
                 'id': item.id,
                 'name': item.name,
@@ -222,6 +223,7 @@ export default {
           .catch(err => {
             throw err;
           });
+
       } else {
         this.$notify({
           group: 'information',

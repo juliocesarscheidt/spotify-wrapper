@@ -48,9 +48,7 @@ export default {
     ...mapState(['user', 'userLoggedIn'])
   },
   methods: {
-    Logout() {
-      Logout();
-    },
+    Logout
   },
 }
 </script>

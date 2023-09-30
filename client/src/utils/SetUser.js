@@ -6,10 +6,10 @@ const SetUser = (user) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
-const SetAccessToken = (token) => {
-  store.dispatch('setToken', token);
-  setAuthTokenAxios(token);
-  localStorage.setItem('accessToken', token);
+const SetAccessToken = (accessToken) => {
+  store.dispatch('setAccessToken', accessToken);
+  setAuthTokenAxios(accessToken);
+  localStorage.setItem('accessToken', accessToken);
 };
 
 const SetRefreshToken = (refreshToken) => {

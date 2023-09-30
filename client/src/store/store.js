@@ -7,15 +7,21 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   strict: true,
   state: {
-    token: null,
+    accessToken: null,
     refreshToken: null,
     expiration: null,
     user: null,
     userLoggedIn: false,
   },
+  getters: {
+    tokenIsExpired(state) {
+      const curTime = Date.now() / 1000;
+      return Boolean((state.expiration <= curTime) && state.refreshToken);
+    },
+  },
   mutations: {
-    setToken (state, token) {
-      state.token = token
+    setAccessToken (state, accessToken) {
+      state.accessToken = accessToken
     },
     setRefreshToken (state, refreshToken) {
       state.refreshToken = refreshToken
@@ -28,7 +34,7 @@ const store = new Vuex.Store({
       state.userLoggedIn = true
     },
     logoutUser (state) {
-      state.token = null
+      state.accessToken = null
       state.refreshToken = null
       state.expiration = null
       state.user = null
@@ -37,8 +43,8 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    setToken ({ commit }, token) {
-      commit('setToken', token)
+    setAccessToken ({ commit }, accessToken) {
+      commit('setAccessToken', accessToken)
     },
     setRefreshToken ({ commit }, refreshToken) {
       commit('setRefreshToken', refreshToken)

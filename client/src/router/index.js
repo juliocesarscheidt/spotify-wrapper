@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store/store';
-// Private
 import Login from '@/components/Public/Login';
-// Public
 import Index from '@/components/Private/Index';
 import Search from '@/components/Private/Search';
+import { fetchToken, getMe } from '@/utils/spotify';
+import { SetAccessToken, SetExpiration, SetUser } from '@/utils/SetUser';
 
 Vue.use(Router);
 
@@ -53,6 +53,18 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  if (store.getters.tokenIsExpired) {
+    // try to refresh the token
+    fetchToken({ grantType: 'refresh_token', refreshToken: store.state.refreshToken })
+      .then((data) => {
+        const { access_token, expires_in } = data;
+        const expiration = new Date().getTime() + (expires_in * 1000);
+        SetAccessToken(access_token);
+        SetExpiration(expiration);
+        getMe(access_token).then((user) => SetUser(user));
+      });
+  }
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.state.user) {
       next({
